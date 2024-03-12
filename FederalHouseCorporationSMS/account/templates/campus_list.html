@@ -1,0 +1,72 @@
+{% extends 'admin_base_site.html'%}
+{% block title%}Campus List | Andalus{% endblock %}
+ 
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+<div class="col-sm-6 col-centered" style="margin-top: 2em;">
+    <h5 class="ur-card-title" style="font-size: 2em;">university list 
+        <a class = "btn btn-outline-info" href="{% url 'campus_register' %}" style="float:right;">add university</a>
+    </h5>
+
+    <table class="table table-striped">
+        <thead class="table-info">
+            <tr>
+                <th ><strong>University Name</strong></th>
+                <th ><strong>University Short Name</strong></th>
+                <th ><strong>Country</strong></th>
+            </tr>
+        </thead>
+        {% for i in campus_list %}
+            <tr>
+                <td class="td right team">
+                    <img src="{{i.logo.url}}" style = "height:30px; width:30px;margin-right:1em;" >
+                    <a href="{% url 'edit_campus' i.id %}" style="text-decoration: none;">{{i.name}}</a>
+                </td>
+                <td >{{i.short_name}}</td>
+                <td >{{i.country}}</td>
+            </tr>
+        {% endfor %}
+    </table>  
+    
+    <!-- pagination -->
+    {% if campus_list.has_other_pages %}
+        {% load proper_paginate %}
+        {% load url_replace %}
+        <ul class="pagination">
+            {% if campus_list.number == 1 %}
+                <li class="disabled"><span>⇤</span></li>
+            {% else %}
+                <li><a class="page-link" href="?{% url_replace request 'page' 1 %}">⇤</a></li>
+            {% endif %}
+            {% if campus_list.has_previous %}
+                
+                <li><a class="page-link" href="?{% url_replace request 'page' campus_list.previous_page_number %}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator|proper_paginate:campus_list.number%}
+                {% if campus_list.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a class="page-link" href="?{% url_replace request 'page' i %}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if campus_list.has_next %}
+                <li><a class="page-link" href="?{% url_replace request 'page' campus_list.next_page_number %}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+            {% if campus_list.number == paginator.num_pages %}
+                <li class="disabled"><span>⇥</span></li>
+            {% else %}
+                <li><a class="page-link" href="?{% url_replace request 'page' paginator.num_pages %}">⇥</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+    <!-- end pagination -->      
+</div>
+
+{% endblock %}
+
+   

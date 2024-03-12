@@ -1,0 +1,36 @@
+{% extends 'base_site.html'%}
+{% block title%}SMS Detail{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+    <link rel="stylesheet" href="{% static 'files/bootstrap/css/bootstrap.css' %}"  type="text/css" >
+
+    <style>
+        th, td {
+            padding: 15px;
+        }
+    </style>
+    
+    <div class = "container col-9" style="margin-top: 50px;">
+        <div class="col-sm-7">
+            <table class="table table-light" style="margin-top: 50px;width: 740px;" >
+                {% if sms %}
+                <tr>
+                    <td style="width: 200px;"><strong>Phone Number:</strong></td>
+                    <td style="padding-left:50px;">{{sms.destination}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 200px;"><strong>Text:</strong></td>
+                    <td style="padding-left:50px;">{{sms.text}}</td>
+                </tr><tr>
+                    <td style="width: 200px;"><strong>Sent Time:</strong></td>
+                    <td style="padding-left:50px;">{{sms.created_at}}</td>
+                {% endif %}
+            </table>
+
+        </div>
+        
+       
+    </div>
+{%endblock%}

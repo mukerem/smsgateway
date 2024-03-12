@@ -1,0 +1,32 @@
+{% extends 'base_site.html'%}
+{% block title%}Send SMS{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+<div class="card col-sm-6 col-centered" style="margin-left: 15%;" >
+    <div class="card-header" style="font-size: 18px;"> 
+        <strong>New SMS </strong> 
+        
+    </div>
+    <form  method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {% include 'horizontal_form.html' %}
+        <input type="submit" value="Send" style="margin-left: 2%;">
+        <input type="hidden" name="next" value="{{ next }}">         
+    </form>
+    
+</div>
+{% endblock %}
+
+   
+
+
+
+
+
+
+
+
+
+

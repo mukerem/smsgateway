@@ -1,0 +1,16 @@
+
+{
+    "username" : "65432",
+    "password" : "fghjkkk",
+    "ip" : "10.190.10.16",
+    "port" : 8313,
+    "apiVersion" : 1,
+    "senderAccess" : "82101055033",
+    "senderName" : "Toptech IT Solutions",
+    "message" : "TEST from Toptech IT Solutions",
+    "receiverAddress" : [
+                "+251913152485",
+                "+251921123673",
+                "+251944121626"
+            ] 
+    }

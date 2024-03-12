@@ -1,0 +1,68 @@
+{% extends 'base_site.html'%}
+{% block title%}SMS List{% endblock %}
+ 
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+<div class="col-sm-6 col-centered" style="margin-top: 2em;">
+
+    <table class="table table-striped">
+        <thead class="table-info">
+            <tr>
+                <th ><strong>Phone Number</strong></th>
+                <th ><strong>Text</strong></th>
+                <th ><strong>Sent Time</strong></th>
+            </tr>
+        </thead>
+        {% for i in sms_list %}
+            <tr>
+                <td class="td right team">
+                    <a href="{% url 'sms_detail' i.id %}" style="text-decoration: none;">{{i.destination}}</a>
+                </td>
+                <td >{{i.text}}</td>
+                <td >{{i.created_at}}</td>
+            </tr>
+        {% endfor %}
+    </table>  
+    
+    <!-- pagination -->
+    {% if sms_list.has_other_pages %}
+        {% load proper_paginate %}
+        {% load url_replace %}
+        <ul class="pagination">
+            {% if sms_list.number == 1 %}
+                <li class="disabled"><span>⇤</span></li>
+            {% else %}
+                <li><a class="page-link" href="?{% url_replace request 'page' 1 %}">⇤</a></li>
+            {% endif %}
+            {% if sms_list.has_previous %}
+                
+                <li><a class="page-link" href="?{% url_replace request 'page' sms_list.previous_page_number %}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator|proper_paginate:sms_list.number%}
+                {% if sms_list.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a class="page-link" href="?{% url_replace request 'page' i %}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if sms_list.has_next %}
+                <li><a class="page-link" href="?{% url_replace request 'page' sms_list.next_page_number %}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+            {% if sms_list.number == paginator.num_pages %}
+                <li class="disabled"><span>⇥</span></li>
+            {% else %}
+                <li><a class="page-link" href="?{% url_replace request 'page' paginator.num_pages %}">⇥</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+    <!-- end pagination -->      
+</div>
+
+{% endblock %}
+
+   
